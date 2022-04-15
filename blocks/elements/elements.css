@@ -1,11 +1,13 @@
 .elements {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: center;
-    background:#ffff ;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 282px);
+    justify-content: center;
+    grid-gap: 17px;
+    margin-top: 36px;
 }
 
-
-
-
+@media (min-width: 768px) {
+    .elements {
+        margin-top: 47px;
+    }
+}
