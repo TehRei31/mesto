@@ -5,6 +5,11 @@
     padding: 0;
     background: #000;
     margin-left: 10px;
+    cursor: pointer;
+}
+
+.profile__edit-button:hover {
+    opacity: 0.6;
 }
 
 @media (min-width: 768px) {
