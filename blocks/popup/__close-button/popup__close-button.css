@@ -1,0 +1,21 @@
+.popup__close-button {
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #fff;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: -36px;
+    right: 0;
+}
+
+@media (min-width: 768px) {
+    .popup__close-button {
+        width: 32px;
+        height: 32px;
+        top: -40px;
+        right: -40px;
+    }
+}
