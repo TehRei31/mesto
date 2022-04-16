@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/styles.css">
     <title>MESTO</title>
+    <script src="./javascript/index.js"></script>
 </head>
 <body>
     <div class="page">
-        <div class="popup popup_opened">
+        <div class="popup">
             <div class="popup__container">
                 <button type="button" class="popup__close-button">
                     <img src="./images/close.svg" alt="close" class="popup__close-icon">
@@ -16,18 +17,16 @@
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <form action="" class="popup__form">
                     <input
-                        class="popup__input"
+                        class="popup__input popup__name"
                         type="text"
                         name="name"
-                        id=""
                         placeholder="Имя"
                     >
                     <input
-                        class="popup__input"
+                        class="popup__input popup__about"
                         type="text"
-                        name="proffesion"
-                        id=""
-                        placeholder="Профессия"
+                        name="about"
+                        placeholder="О себе"
                     >
                     <button
                         type="submit"
