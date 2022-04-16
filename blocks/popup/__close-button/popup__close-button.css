@@ -11,6 +11,10 @@
     right: 0;
 }
 
+.popup__close-button:hover {
+    opacity: 0.6;
+}
+
 @media (min-width: 768px) {
     .popup__close-button {
         width: 32px;
