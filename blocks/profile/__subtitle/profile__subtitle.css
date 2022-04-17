@@ -1,10 +1,15 @@
 .profile__subtitle {
+    font-family: 'Inter', Arial, sans-serif;
     margin: 0;
     color: #fff;
     margin-top: 14px;
     font-size: 14px;
     line-height: 17px;
     font-weight: 400;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    width: 100%;
 }
 
 @media (min-width: 768px) {

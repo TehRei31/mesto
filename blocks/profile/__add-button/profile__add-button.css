@@ -7,6 +7,7 @@
     font-size: 0;
     margin-top: 36px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .profile__add-button:hover {
@@ -15,6 +16,7 @@
 
 @media (min-width: 768px) {
     .profile__add-button {
+        margin-left: 32px;
         width: 150px;
         margin-top: 0;
     }

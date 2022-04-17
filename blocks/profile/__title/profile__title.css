@@ -1,9 +1,13 @@
 .profile__title {
     color: #fff;
+    font-family: 'Inter', Arial, sans-serif;
     margin: 0;
     font-size: 27px;
     line-height: 32px;
     font-weight: 500;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 @media (min-width: 768px) {

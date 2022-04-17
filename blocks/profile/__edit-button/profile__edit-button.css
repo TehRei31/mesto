@@ -6,6 +6,7 @@
     background: #000;
     margin-left: 10px;
     cursor: pointer;
+    flex-shrink: 0;
 }
 
 .profile__edit-button:hover {
