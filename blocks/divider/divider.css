@@ -1,0 +1,11 @@
+.divider {
+    max-width: 880px;
+    opacity: 0.7;
+    border: 1px solid #545454;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
