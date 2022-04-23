@@ -1,5 +1,12 @@
 .profile__name {
     display: flex;
+    justify-content: center;
     align-items: center;
     width: 100%;
+}
+
+@media (min-width: 768px) {
+    .profile__name {
+        justify-content: flex-start;
+    }
 }
