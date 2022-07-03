@@ -1,0 +1,15 @@
+.popup_closing {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fade-out 0.3s;
+}
+
+@keyframes fade-out {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

@@ -1,0 +1,10 @@
+.element__trash-image {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+.element__trash-image:hover {
+    opacity: 0.6;
+    cursor: pointer;
+}
