@@ -25,8 +25,6 @@ const initialCards = [
     }
 ];
 
-const likedCards = {};
-
 
 // EDIT POPUP
 const editProfileButton = document.querySelector('.profile__edit-button');
@@ -130,36 +128,15 @@ function addElement(card) {
     elementLikeButton.type = 'button';
     elementLikeButton.addEventListener('click', (event) => {
         const {currentTarget} = event;
-        const elementLikeButtonImage = currentTarget.getElementsByClassName('element__like-image')[0];
-        if (likedCards[card.name]) {
-            elementLikeButtonImage.src = './images/like.svg';
-            elementLikeButtonImage.alt = 'нравится';
-            delete likedCards[card.name];
-        } else {
-            elementLikeButtonImage.src = './images/like-active.svg';
-            elementLikeButtonImage.alt = 'не нравится';
-            likedCards[card.name] = true;
-        }
+        currentTarget.classList.toggle('element__like-button_active');
     });
-
-    const elementLikeImage = document.createElement('img');
-    elementLikeImage.classList.add('element__like-image');
-    if (likedCards[card.name]) {
-        elementLikeImage.src = './images/like-active.svg';
-        elementLikeImage.alt = 'не нравится';
-    } else {
-        elementLikeImage.src = './images/like.svg';
-        elementLikeImage.alt = 'нравится';
-    }
 
     const elementTrashImage = document.createElement('img');
     elementTrashImage.classList.add('element__trash-image');
     elementTrashImage.src = './images/trash.svg';
     elementTrashImage.alt = 'удалить';
     elementTrashImage.addEventListener('click', () => {
-        elementBlock.parentNode.removeChild(elementBlock);
-        elementLikeButton.removeEventListener('click');
-        elementTrashImage.removeEventListener('click');
+        elementBlock.remove();
     });
 
     elementsSection.prepend(elementBlock);
