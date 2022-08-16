@@ -56,12 +56,12 @@ popupFormEditProfile.addEventListener('submit', (event) => {
 
 
 // ADD POPUP
-const addButton = document.querySelector('.profile__add-button');
+const addElementButton = document.querySelector('.profile__add-button');
 const popupAddElement = document.querySelector('.popup_type_add-element');
 const closeButtonAddElement = document.querySelector('.popup__close-button_type_add-element');
 const popupFormAddElement = document.querySelector('.popup__form_type_add-element')
 
-addButton.addEventListener('click', () => {
+addElementButton.addEventListener('click', () => {
     popupAddElement.classList.add('popup_opening');
 });
 
@@ -71,10 +71,12 @@ closeButtonAddElement.addEventListener('click', () => {
 
 popupFormAddElement.addEventListener('submit', (event) => {
     event.preventDefault();
-    addElement({
+
+    const element = createElement({
         name: event.target.name.value,
         link: event.target.link.value
     });
+    elementsSection.appendChild(element);
     popupAddElement.classList.add('popup_closing');
 });
 
@@ -83,6 +85,8 @@ popupFormAddElement.addEventListener('submit', (event) => {
 const popupPreview = document.querySelector('.popup_type_photo-preview');
 const closeButtonPreview = document.querySelector('.popup__close-button_type_photo-preview');
 const preview = document.querySelector('.preview-container');
+const previewImage = document.querySelector('.preview__image');
+const previewName = document.querySelector('.preview__name');
 
 closeButtonPreview.addEventListener('click', () => {
     popupPreview.classList.add('popup_closing');
@@ -92,65 +96,46 @@ closeButtonPreview.addEventListener('click', () => {
 // ELEMENTS
 const elementsSection = document.querySelector('.elements');
 
-function addElement(card) {
-    const elementBlock = document.createElement('div')
-    elementBlock.classList.add('element');
+function createElement(card) {
+    const elementTemplate = document.querySelector('.element__template');
+    const elementTemplateClone = elementTemplate.content.cloneNode(true);
+    const elementNode = elementTemplateClone.querySelector('.element');
 
-    const elementImage = document.createElement('img');
-    elementImage.classList.add('element__image');
+    const elementImage = elementTemplateClone.querySelector('.element__image');
     elementImage.src = card.link;
     elementImage.alt = card.name;
     elementImage.addEventListener('click', () => {
         popupPreview.classList.add('popup_opening');
-        
-        const previewImage = document.createElement('img');
-        previewImage.classList.add('preview__image');
+
         previewImage.src = card.link;
         previewImage.alt = card.name;
 
-        const previewName = document.createElement('p');
-        previewName.classList.add('preview__name');
         previewName.innerText = card.name;
-
-        preview.appendChild(previewImage);
-        preview.appendChild(previewName);
     });
 
-    const elementInfo = document.createElement('div');
-    elementInfo.classList.add('element__info');
-
-    const elementTitle = document.createElement('h2');
-    elementTitle.classList.add('element__title');
+    const elementTitle = elementTemplateClone.querySelector('.element__title');
     elementTitle.innerHTML = card.name;
 
-    const elementLikeButton = document.createElement('button');
-    elementLikeButton.classList.add('element__like-button');
-    elementLikeButton.type = 'button';
+    const elementLikeButton = elementTemplateClone.querySelector('.element__like-button');
     elementLikeButton.addEventListener('click', (event) => {
         const {currentTarget} = event;
         currentTarget.classList.toggle('element__like-button_active');
     });
 
-    const elementTrashImage = document.createElement('img');
-    elementTrashImage.classList.add('element__trash-image');
+    const elementTrashImage = elementTemplateClone.querySelector('.element__trash-image');
     elementTrashImage.src = './images/trash.svg';
     elementTrashImage.alt = 'удалить';
     elementTrashImage.addEventListener('click', () => {
-        elementBlock.remove();
+        elementNode.remove();
     });
 
-    elementsSection.prepend(elementBlock);
-    elementBlock.appendChild(elementImage);
-    elementBlock.appendChild(elementInfo);
-    elementBlock.appendChild(elementTrashImage);
-    elementInfo.appendChild(elementTitle);
-    elementInfo.appendChild(elementLikeButton);
-    elementLikeButton.appendChild(elementLikeImage);
+    return elementTemplateClone;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    initialCards.reverse().forEach((card) => {
-        addElement(card);
+    initialCards.forEach((card) => {
+        const element = createElement(card);
+        elementsSection.appendChild(element);
     });
 });
 
@@ -165,9 +150,6 @@ document.addEventListener('animationstart', (event) => {
 document.addEventListener('animationend', (event) => {
     if (event.animationName === 'fade-out') {
         event.target.classList.remove('popup_closing');
-        while (preview.firstChild) {
-            preview.firstChild.remove();
-        }
     }
 
     if (event.animationName === 'fade-in') {

@@ -4,6 +4,8 @@
     background: transparent;
     cursor: pointer;
     color: #fff;
+    background-image: url(../../../images/close.svg);
+    background-size: contain;
     width: 20px;
     height: 20px;
     position: absolute;
