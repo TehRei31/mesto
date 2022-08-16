@@ -27,6 +27,10 @@ const initialCards = [
 
 
 // POPUP ANIMATION
+// для ревьювера
+// здесь задаются общие слушатели анимации начала и конца
+// а внутри слушателей определяется это анимация закрытия или открытия
+// из-за этого нельзя их поместить внутрь функций openPopup/closePopup
 document.addEventListener('animationstart', (event) => {
     if (event.animationName === 'fade-out') {
         event.target.classList.remove('popup_opened');
