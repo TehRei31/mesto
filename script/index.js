@@ -26,6 +26,31 @@ const initialCards = [
 ];
 
 
+// POPUP ANIMATION
+document.addEventListener('animationstart', (event) => {
+    if (event.animationName === 'fade-out') {
+        event.target.classList.remove('popup_opened');
+    }
+});
+document.addEventListener('animationend', (event) => {
+    if (event.animationName === 'fade-in') {
+        event.target.classList.remove('popup_opening');
+        event.target.classList.add('popup_opened');
+    }
+
+    if (event.animationName === 'fade-out') {
+        event.target.classList.remove('popup_closing');
+    }
+});
+
+function openPopup(popup) {
+    popup.classList.add('popup_opening');
+}
+function closePopup(popup) {
+    popup.classList.add('popup_closing');
+}
+
+
 // EDIT POPUP
 const editProfileButton = document.querySelector('.profile__edit-button');
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
@@ -40,18 +65,18 @@ popupNameEditPrdofile.value = profileName.innerHTML;
 popupAboutEditProfile.value = profileAbout.innerHTML;
 
 editProfileButton.addEventListener('click', () => {
-    popupEditProfile.classList.add('popup_opening');
+    openPopup(popupEditProfile);
 });
 
 closeButtomEditProdile.addEventListener('click', () => {
-    popupEditProfile.classList.add('popup_closing');
+    closePopup(popupEditProfile);
 });
 
 popupFormEditProfile.addEventListener('submit', (event) => {
     event.preventDefault();
     profileName.innerHTML = event.target.name.value;
     profileAbout.innerHTML = event.target.about.value;
-    popupEditProfile.classList.add('popup_closing');
+    closePopup(popupEditProfile);
 });
 
 
@@ -62,11 +87,11 @@ const closeButtonAddElement = document.querySelector('.popup__close-button_type_
 const popupFormAddElement = document.querySelector('.popup__form_type_add-element')
 
 addElementButton.addEventListener('click', () => {
-    popupAddElement.classList.add('popup_opening');
+    openPopup(popupAddElement);
 });
 
 closeButtonAddElement.addEventListener('click', () => {
-    popupAddElement.classList.add('popup_closing');
+    closePopup(popupAddElement);
 });
 
 popupFormAddElement.addEventListener('submit', (event) => {
@@ -77,7 +102,7 @@ popupFormAddElement.addEventListener('submit', (event) => {
         link: event.target.link.value
     });
     elementsSection.appendChild(element);
-    popupAddElement.classList.add('popup_closing');
+    closePopup(popupAddElement);
 });
 
 
@@ -89,7 +114,7 @@ const previewImage = document.querySelector('.preview__image');
 const previewName = document.querySelector('.preview__name');
 
 closeButtonPreview.addEventListener('click', () => {
-    popupPreview.classList.add('popup_closing');
+    closePopup(popupPreview);
 });
 
 
@@ -105,7 +130,7 @@ function createElement(card) {
     elementImage.src = card.link;
     elementImage.alt = card.name;
     elementImage.addEventListener('click', () => {
-        popupPreview.classList.add('popup_opening');
+        openPopup(popupPreview);
 
         previewImage.src = card.link;
         previewImage.alt = card.name;
@@ -137,23 +162,4 @@ document.addEventListener('DOMContentLoaded', () => {
         const element = createElement(card);
         elementsSection.appendChild(element);
     });
-});
-
-
-// ANIMATION
-document.addEventListener('animationstart', (event) => {
-    if (event.animationName === 'fade-out') {
-        event.target.classList.remove('popup_opened');
-    }
-});
-
-document.addEventListener('animationend', (event) => {
-    if (event.animationName === 'fade-out') {
-        event.target.classList.remove('popup_closing');
-    }
-
-    if (event.animationName === 'fade-in') {
-        event.target.classList.remove('popup_opening');
-        event.target.classList.add('popup_opened');
-    }
 });
