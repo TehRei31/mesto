@@ -26,32 +26,11 @@ const initialCards = [
 ];
 
 
-// POPUP ANIMATION
-// для ревьювера
-// здесь задаются общие слушатели анимации начала и конца
-// а внутри слушателей определяется это анимация закрытия или открытия
-// из-за этого нельзя их поместить внутрь функций openPopup/closePopup
-document.addEventListener('animationstart', (event) => {
-    if (event.animationName === 'fade-out') {
-        event.target.classList.remove('popup_opened');
-    }
-});
-document.addEventListener('animationend', (event) => {
-    if (event.animationName === 'fade-in') {
-        event.target.classList.remove('popup_opening');
-        event.target.classList.add('popup_opened');
-    }
-
-    if (event.animationName === 'fade-out') {
-        event.target.classList.remove('popup_closing');
-    }
-});
-
 function openPopup(popup) {
-    popup.classList.add('popup_opening');
+    popup.classList.add('popup_opened');
 }
 function closePopup(popup) {
-    popup.classList.add('popup_closing');
+    popup.classList.remove('popup_opened');
 }
 
 
@@ -161,9 +140,7 @@ function createElement(card) {
     return elementTemplateClone;
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    initialCards.forEach((card) => {
-        const element = createElement(card);
-        elementsSection.appendChild(element);
-    });
+initialCards.forEach((card) => {
+    const element = createElement(card);
+    elementsSection.appendChild(element);
 });
