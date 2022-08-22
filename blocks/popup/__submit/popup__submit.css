@@ -1,6 +1,5 @@
 .popup__submit {
     font-family: 'Inter', Arial, sans-serif;
-    margin-top: 45px;
     border: none;
     background: #000;
     color: #fff;
@@ -14,10 +13,4 @@
 
 .popup__submit:hover {
     opacity: 0.8;
-}
-
-@media (min-width: 768px) {
-    .popup__submit {
-        margin-top: 48px;
-    }
 }

@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="./styles/index.css">
     <title>MESTO</title>
     <script defer src="./script/index.js"></script>
+    <script defer src="./script/validation.js"></script>
 </head>
 <body>
     <div class="page">
@@ -51,20 +52,27 @@
                 <button type="button" class="popup__close-button popup__close-button_type_edit-prodile"></button>
                 <h2 class="popup__title">Редактировать профиль</h2>
                 <form action="#" class="popup__form popup__form_type_edit-profile">
-                    <input
-                        class="popup__input popup__name"
-                        type="text"
-                        name="name"
-                        placeholder="Имя"
-                        required
-                    >
-                    <input
-                        class="popup__input popup__about"
-                        type="text"
-                        name="about"
-                        placeholder="О себе"
-                        required
-                    >
+                    <label class="popup__input-container">
+                        <input
+                            class="popup__input popup__name"
+                            type="text"
+                            name="name"
+                            placeholder="Имя"
+                            required
+                        >
+                    </input>
+                        <span class="popup__input-error"></span>
+                    </label>
+                    <label class="popup__input-container">
+                        <input
+                            class="popup__input popup__about"
+                            type="text"
+                            name="about"
+                            placeholder="О себе"
+                            required
+                        >
+                        <span class="popup__input-error"></span>
+                    </label>
                     <button
                         type="submit"
                         class="popup__submit"
@@ -87,7 +95,7 @@
                         required
                     >
                     <input
-                        class="popup__input popup__about"
+                        class="popup__input popup__link"
                         type="url"
                         name="link"
                         placeholder="Ссылка на картинку"
