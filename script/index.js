@@ -40,6 +40,15 @@ function overlayPopupListener(event) {
     }
 }
 
+document.addEventListener('keydown', (event) => {
+    if (event.code === 'Escape') {
+        const activePopup = document.querySelector('.popup_opened');
+        if (activePopup) {
+            closePopup(activePopup);
+        }
+    }
+});
+
 
 // EDIT POPUP
 const editProfileButton = document.querySelector('.profile__edit-button');
