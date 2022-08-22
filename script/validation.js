@@ -111,7 +111,6 @@ function validateElement(target) {
         const error = validateElementName(target.value);
         elementFormErros.name = error;
         setInputError(target, error);
-        
     } else if (target.name === 'link') {
         const error = validateElementLink(target.value);
         elementFormErros.link = error;

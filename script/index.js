@@ -32,6 +32,13 @@ function openPopup(popup) {
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
 }
+function overlayPopupListener(event) {
+    const {target} = event;
+
+    if (target.classList.contains('popup')) {
+        closePopup(target);
+    }
+}
 
 
 // EDIT POPUP
@@ -46,6 +53,8 @@ const profileAbout = document.querySelector('.profile__subtitle');
 
 popupNameEditPrdofile.value = profileName.innerHTML;
 popupAboutEditProfile.value = profileAbout.innerHTML;
+
+popupEditProfile.addEventListener('click', overlayPopupListener);
 
 editProfileButton.addEventListener('click', () => {
     openPopup(popupEditProfile);
@@ -68,6 +77,8 @@ const addElementButton = document.querySelector('.profile__add-button');
 const popupAddElement = document.querySelector('.popup_type_add-element');
 const closeButtonAddElement = document.querySelector('.popup__close-button_type_add-element');
 const popupFormAddElement = document.querySelector('.popup__form_type_add-element')
+
+popupAddElement.addEventListener('click', overlayPopupListener);
 
 addElementButton.addEventListener('click', () => {
     openPopup(popupAddElement);
@@ -95,6 +106,8 @@ const closeButtonPreview = document.querySelector('.popup__close-button_type_pho
 const preview = document.querySelector('.preview-container');
 const previewImage = document.querySelector('.preview__image');
 const previewName = document.querySelector('.preview__name');
+
+popupPreview.addEventListener('click', overlayPopupListener);
 
 closeButtonPreview.addEventListener('click', () => {
     closePopup(popupPreview);
