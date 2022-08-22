@@ -87,20 +87,26 @@
                 <button type="button" class="popup__close-button popup__close-button_type_add-element"></button>
                 <h2 class="popup__title">Новое место</h2>
                 <form action="#" class="popup__form popup__form_type_add-element">
-                    <input
-                        class="popup__input popup__name"
-                        type="text"
-                        name="name"
-                        placeholder="Название"
-                        required
-                    >
-                    <input
-                        class="popup__input popup__link"
-                        type="url"
-                        name="link"
-                        placeholder="Ссылка на картинку"
-                        required
-                    >
+                    <label class="popup__input-container">
+                        <input
+                            class="popup__input popup__name"
+                            type="text"
+                            name="name"
+                            placeholder="Название"
+                            required
+                        >
+                        <span class="popup__input-error"></span>
+                    </label>
+                    <label class="popup__input-container">
+                        <input
+                            class="popup__input popup__link"
+                            type="url"
+                            name="link"
+                            placeholder="Ссылка на картинку"
+                            required
+                        >
+                        <span class="popup__input-error"></span>
+                    </label>
                     <button
                         type="submit"
                         class="popup__submit"
