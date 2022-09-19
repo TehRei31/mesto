@@ -1,4 +1,5 @@
 @import url('../vendor/normalize.css');
+@import url('../fonts/Inter/inter.css');
 @import url('../blocks/popup/popup.css');
 @import url('../blocks/popup/_type/popup_type_photo-preview.css');
 @import url('../blocks/popup/_opened/popup_opened.css');
