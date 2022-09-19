@@ -106,7 +106,7 @@ popupFormAddElement.addEventListener('submit', (event) => {
         name: event.target.name.value,
         link: event.target.link.value
     });
-    elementsSection.appendChild(element);
+    elementsSection.prepend(element);
     closePopup(popupAddElement);
 });
 
