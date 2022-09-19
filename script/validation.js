@@ -51,8 +51,10 @@ function validateForm({
 }) {
     if (hasInvalidInput(inputContainers)) {
         submit.classList.add(disabledSubmitClass);
+        submit.disabled = true;
     } else {
         submit.classList.remove(disabledSubmitClass);
+        submit.disabled = false;
     }
 }
 

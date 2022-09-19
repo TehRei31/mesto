@@ -60,13 +60,15 @@ const popupFormEditProfile = document.querySelector('.popup__form_type_edit-prof
 const profileName = document.querySelector('.profile__title');
 const profileAbout = document.querySelector('.profile__subtitle');
 
-popupNameEditPrdofile.value = profileName.innerHTML;
-popupAboutEditProfile.value = profileAbout.innerHTML;
+popupNameEditPrdofile.value = profileName.textContent;
+popupAboutEditProfile.value = profileAbout.textContent;
 
 popupEditProfile.addEventListener('click', overlayPopupListener);
 
 editProfileButton.addEventListener('click', () => {
     openPopup(popupEditProfile);
+    popupNameEditPrdofile.value = profileName.textContent;
+    popupAboutEditProfile.value = profileAbout.textContent;
 });
 
 closeButtomEditProdile.addEventListener('click', () => {
@@ -75,8 +77,8 @@ closeButtomEditProdile.addEventListener('click', () => {
 
 popupFormEditProfile.addEventListener('submit', (event) => {
     event.preventDefault();
-    profileName.innerHTML = event.target.name.value;
-    profileAbout.innerHTML = event.target.about.value;
+    profileName.textContent = popupNameEditPrdofile.value;
+    profileAbout.textContent = popupAboutEditProfile.value;
     closePopup(popupEditProfile);
 });
 
@@ -125,9 +127,9 @@ closeButtonPreview.addEventListener('click', () => {
 
 // ELEMENTS
 const elementsSection = document.querySelector('.elements');
+const elementTemplate = document.querySelector('.element__template');
 
 function createElement(card) {
-    const elementTemplate = document.querySelector('.element__template');
     const elementTemplateClone = elementTemplate.content.cloneNode(true);
     const elementNode = elementTemplateClone.querySelector('.element');
 
@@ -144,7 +146,7 @@ function createElement(card) {
     });
 
     const elementTitle = elementTemplateClone.querySelector('.element__title');
-    elementTitle.innerHTML = card.name;
+    elementTitle.textContent = card.name;
 
     const elementLikeButton = elementTemplateClone.querySelector('.element__like-button');
     elementLikeButton.addEventListener('click', (event) => {
@@ -152,10 +154,8 @@ function createElement(card) {
         currentTarget.classList.toggle('element__like-button_active');
     });
 
-    const elementTrashImage = elementTemplateClone.querySelector('.element__trash-image');
-    elementTrashImage.src = './images/trash.svg';
-    elementTrashImage.alt = 'удалить';
-    elementTrashImage.addEventListener('click', () => {
+    const elementTrashButton = elementTemplateClone.querySelector('.element__trash-button');
+    elementTrashButton.addEventListener('click', () => {
         elementNode.remove();
     });
 
