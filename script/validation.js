@@ -1,123 +1,132 @@
-function formValidateListener(validateFn, submitButton) {
-    return (event) => {
-        const {target} = event;
-
-        const hasErrorForm = validateFn(target);
-
-        if (hasErrorForm) {
-            submitButton.classList.add('popup__submit_disabled');
-        } else {
-            submitButton.classList.remove('popup__submit_disabled');
-        }
-    };
+function showInputError({
+    input,
+    inputErrorClass,
+    error,
+    errorMessage,
+}) {
+    input.classList.add(inputErrorClass);
+    error.textContent = errorMessage;
 }
 
-function setInputError(target, error) {
-    const inputError = target.nextElementSibling;
-    inputError.innerHTML = error;
+function hideInputError({
+    input,
+    inputErrorClass,
+    error,
+}) {
+    input.classList.remove(inputErrorClass);
+    error.textContent = '';
+}
 
-    if (error) {
-        target.classList.add('popup__input_error');
+function validateInput({
+    input,
+    error,
+    inputErrorClass,
+}) {
+    if (!input.validity.valid) {
+        showInputError({
+            input,
+            inputErrorClass,
+            error,
+            errorMessage: input.validationMessage,
+        })
     } else {
-        target.classList.remove('popup__input_error');
+        hideInputError({
+            input,
+            inputErrorClass,
+            error,
+        });
     }
 }
 
-function validateTextInput(value, min, max) {
-    let error = '';
-
-    if (value.length === 0) {
-        error = 'Вы пропустили это поле.';
-    } else if (value.length < min) {
-        error = `Минимальное количество символов: ${min}. Длина текста сейчас: ${value.length}.`;
-    } else if (value.length > max) {
-        error = `Максимальное количество символов: ${max}. Длина текста сейчас: ${value.length}.`;
-    }
-
-    return error;
+function hasInvalidInput(inputContainers) {
+    return inputContainers.some((inputContainer) => {
+        return !inputContainer.input.validity.valid;
+      });
 }
 
-
-// PROFILE VALIDATION
-const profileForm = document.querySelector('.popup__form_type_edit-profile');
-const submitProfileForm = profileForm.querySelector('.popup__submit')
-
-const MIN_PROFILE_NAME = 2;
-const MAX_PROFILE_NAME = 40;
-function validateProfileName(value) {
-    return validateTextInput(value, MIN_PROFILE_NAME, MAX_PROFILE_ABOUT);
-}
-
-const MIN_PROFILE_ABOUT = 2;
-const MAX_PROFILE_ABOUT = 200;
-function validateProfileAbout(value) {
-    return validateTextInput(value, MIN_PROFILE_ABOUT, MAX_PROFILE_ABOUT);
-}
-
-const profileFormErrors = {
-    name: '',
-    about: ''
-};
-function validateProfile(target) {    
-    if (target.name === 'name') {
-        const error = validateProfileName(target.value);
-        profileFormErrors.name = error;
-        setInputError(target, error);
-        
-    } else if (target.name === 'about') {
-        const error = validateProfileAbout(target.value);
-        profileFormErrors.about = error;
-        setInputError(target, error);
-    }
-
-    return profileFormErrors.name || profileFormErrors.about;
-}
-
-profileForm.addEventListener('input', formValidateListener(validateProfile, submitProfileForm));
-
-
-// ADD ELEMENT VALIDATION
-const addElementForm = document.querySelector('.popup__form_type_add-element');
-const submitElementForm = addElementForm.querySelector('.popup__submit')
-
-const MIN_ELEMENT_NAME = 1;
-const MAX_ELEMENT_NAME = 30;
-function validateElementName(value) {
-    return validateTextInput(value, MIN_ELEMENT_NAME, MAX_ELEMENT_NAME);
-}
-
-function validateElementLink(value) {
-    let error = '';
-
-    if (value.length === 0) {
-        error = 'Вы пропустили это поле.';
+function validateForm({
+    inputContainers,
+    submit,
+    disabledSubmitClass,
+}) {
+    if (hasInvalidInput(inputContainers)) {
+        submit.classList.add(disabledSubmitClass);
     } else {
-        try {
-            new URL(value);
-        } catch (e) {
-            error = 'Введите адрес сайта.';
-        }
+        submit.classList.remove(disabledSubmitClass);
     }
-
-    return error;
 }
 
-const elementFormErros = {
-    name: '',
-    link: ''
-};
-function validateElement(target) {    
-    if (target.name === 'name') {
-        const error = validateElementName(target.value);
-        elementFormErros.name = error;
-        setInputError(target, error);
-    } else if (target.name === 'link') {
-        const error = validateElementLink(target.value);
-        elementFormErros.link = error;
-        setInputError(target, error);
-    }
-
-    return elementFormErros.name || elementFormErros.link;
+function setInputListeners({
+    inputContainers,
+    submit,
+    inputErrorClass,
+    disabledSubmitClass,
+}) {
+    validateForm({
+        inputContainers,
+        submit,
+        disabledSubmitClass,
+    });
+    inputContainers.forEach((inputContainer) => {
+        inputContainer.input.addEventListener('input', () => {
+            validateInput({
+                input: inputContainer.input,
+                error: inputContainer.error,
+                inputErrorClass
+            });
+            validateForm({
+                inputContainers,
+                submit,
+                disabledSubmitClass,
+            });
+        });
+    });
+    
 }
 
-addElementForm.addEventListener('input', formValidateListener(validateElement, submitElementForm));
+function enableValidation({
+    formSelector,
+    inputContainerSelector,
+    inputSelector,
+    errorSelector,
+    submitSelector,
+    inputErrorClass,
+    disabledSubmitClass,
+}) {
+    const form = document.querySelector(formSelector);
+
+    const submit = form.querySelector(submitSelector);
+
+    const inputContainers = Array.from(form.querySelectorAll(inputContainerSelector))
+        .map((inputContainer) => ({
+            input: inputContainer.querySelector(inputSelector),
+            error: inputContainer.querySelector(errorSelector),
+        }));
+
+    setInputListeners({
+        inputContainers,
+        submit,
+        inputErrorClass,
+        disabledSubmitClass,
+    })
+}
+
+enableValidation({
+    formSelector: '.popup__form_type_edit-profile',
+    inputContainerSelector: '.popup__input-container',
+    inputSelector: '.popup__input',
+    errorSelector: '.popup__input-error',
+    submitSelector: '.popup__submit',
+    inputErrorClass: 'popup__input_error',
+    disabledSubmitClass: 'popup__submit_disabled',
+});
+
+enableValidation({
+    formSelector: '.popup__form_type_add-element',
+    inputContainerSelector: '.popup__input-container',
+    inputSelector: '.popup__input',
+    errorSelector: '.popup__input-error',
+    submitSelector: '.popup__submit',
+    inputErrorClass: 'popup__input_error',
+    disabledSubmitClass: 'popup__submit_disabled',
+});
