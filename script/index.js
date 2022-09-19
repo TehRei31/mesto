@@ -25,12 +25,21 @@ const initialCards = [
     }
 ];
 
+function closePopupEsc(popup) {
+    return (event) => {
+        if (event.code === 'Escape') {
+            closePopup(popup);
+        }
+    }
+}
 
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener('keydown', closePopupEsc(popup));
 }
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closePopupEsc(popup));
 }
 function overlayPopupListener(event) {
     const {target} = event;
@@ -39,15 +48,6 @@ function overlayPopupListener(event) {
         closePopup(target);
     }
 }
-
-document.addEventListener('keydown', (event) => {
-    if (event.code === 'Escape') {
-        const activePopup = document.querySelector('.popup_opened');
-        if (activePopup) {
-            closePopup(activePopup);
-        }
-    }
-});
 
 
 // EDIT POPUP
