@@ -95,36 +95,28 @@ function enableValidation({
     inputErrorClass,
     disabledSubmitClass,
 }) {
-    const form = document.querySelector(formSelector);
+    const forms = Array.from(document.querySelectorAll(formSelector));
 
-    const submit = form.querySelector(submitSelector);
+    forms.forEach((form) => {
+        const submit = form.querySelector(submitSelector);
 
-    const inputContainers = Array.from(form.querySelectorAll(inputContainerSelector))
-        .map((inputContainer) => ({
-            input: inputContainer.querySelector(inputSelector),
-            error: inputContainer.querySelector(errorSelector),
-        }));
+        const inputContainers = Array.from(form.querySelectorAll(inputContainerSelector))
+            .map((inputContainer) => ({
+                input: inputContainer.querySelector(inputSelector),
+                error: inputContainer.querySelector(errorSelector),
+            }));
 
-    setInputListeners({
-        inputContainers,
-        submit,
-        inputErrorClass,
-        disabledSubmitClass,
-    })
+        setInputListeners({
+            inputContainers,
+            submit,
+            inputErrorClass,
+            disabledSubmitClass,
+        });
+    });
 }
 
 enableValidation({
-    formSelector: '.popup__form_type_edit-profile',
-    inputContainerSelector: '.popup__input-container',
-    inputSelector: '.popup__input',
-    errorSelector: '.popup__input-error',
-    submitSelector: '.popup__submit',
-    inputErrorClass: 'popup__input_error',
-    disabledSubmitClass: 'popup__submit_disabled',
-});
-
-enableValidation({
-    formSelector: '.popup__form_type_add-element',
+    formSelector: '.popup__form',
     inputContainerSelector: '.popup__input-container',
     inputSelector: '.popup__input',
     errorSelector: '.popup__input-error',
