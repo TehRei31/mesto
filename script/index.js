@@ -89,13 +89,23 @@ const closeButtonAddElement = document.querySelector('.popup__close-button_type_
 const popupFormAddElement = document.querySelector('.popup__form_type_add-element');
 const popupNameAddElement = popupFormAddElement.querySelector('.popup__name');
 const popupLinkAddElement = popupFormAddElement.querySelector('.popup__link');
+const sumbitAddElement  = popupFormAddElement.querySelector('.popup__submit');
 
 popupAddElement.addEventListener('click', overlayPopupListener);
 
 addElementButton.addEventListener('click', () => {
     openPopup(popupAddElement);
-    /*popupFormAddElement.reset();*/
+    popupFormAddElement.reset();
+    disableSubmit(sumbitAddElement, formConfig.disabledSubmitClass);
+    resetFormErrors({
+        form: popupFormAddElement,
+        inputContainerSelector: formConfig.inputContainerSelector,
+        inputSelector: formConfig.inputSelector,
+        errorSelector: formConfig.errorSelector,
+        inputErrorClass: formConfig.inputErrorClass
+    });
 });
+
 
 closeButtonAddElement.addEventListener('click', () => {
     closePopup(popupAddElement);
@@ -109,7 +119,6 @@ popupFormAddElement.addEventListener('submit', (event) => {
         link: event.target.link.value
     });
     elementsSection.prepend(element);
-    popupFormAddElement.reset();
     closePopup(popupAddElement);
 });
 

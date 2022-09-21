@@ -1,3 +1,24 @@
+const formConfig = {
+    formSelector: '.popup__form',
+    inputContainerSelector: '.popup__input-container',
+    inputSelector: '.popup__input', 
+    errorSelector: '.popup__input-error',
+    submitSelector: '.popup__submit' , 
+    inputErrorClass: 'popup__input_error' , 
+    disabledSubmitClass: 'popup__submit_disabled',
+};
+
+function resetFormErrors({form, inputContainerSelector, inputSelector, errorSelector, inputErrorClass}) {
+    const inputs = getFormInputs({form, inputContainerSelector, inputSelector, errorSelector});
+    inputs.forEach((inputItem) => {
+        hideInputError({
+            input: inputItem.input,
+            error: inputItem.error,
+            inputErrorClass
+        })
+    });
+}
+
 function showInputError({
     input,
     inputErrorClass,
@@ -44,14 +65,18 @@ function hasInvalidInput(inputContainers) {
       });
 }
 
+function disableSubmit(submit, disabledSubmitClass) {
+    submit.classList.add(disabledSubmitClass);
+    submit.disabled = true;
+}
+
 function validateForm({
     inputContainers,
     submit,
     disabledSubmitClass,
 }) {
     if (hasInvalidInput(inputContainers)) {
-        submit.classList.add(disabledSubmitClass);
-        submit.disabled = true;
+        disableSubmit(submit, disabledSubmitClass);
     } else {
         submit.classList.remove(disabledSubmitClass);
         submit.disabled = false;
@@ -86,6 +111,14 @@ function setInputListeners({
     
 }
 
+function getFormInputs({form, inputContainerSelector, inputSelector, errorSelector}) {
+    return Array.from(form.querySelectorAll(inputContainerSelector))
+            .map((inputContainer) => ({
+                input: inputContainer.querySelector(inputSelector),
+                error: inputContainer.querySelector(errorSelector),
+            }));
+}
+
 function enableValidation({
     formSelector,
     inputContainerSelector,
@@ -100,11 +133,7 @@ function enableValidation({
     forms.forEach((form) => {
         const submit = form.querySelector(submitSelector);
 
-        const inputContainers = Array.from(form.querySelectorAll(inputContainerSelector))
-            .map((inputContainer) => ({
-                input: inputContainer.querySelector(inputSelector),
-                error: inputContainer.querySelector(errorSelector),
-            }));
+        const inputContainers = getFormInputs({form, inputContainerSelector, inputSelector, errorSelector});
 
         setInputListeners({
             inputContainers,
@@ -115,12 +144,4 @@ function enableValidation({
     });
 }
 
-enableValidation({
-    formSelector: '.popup__form',
-    inputContainerSelector: '.popup__input-container',
-    inputSelector: '.popup__input',
-    errorSelector: '.popup__input-error',
-    submitSelector: '.popup__submit',
-    inputErrorClass: 'popup__input_error',
-    disabledSubmitClass: 'popup__submit_disabled',
-});
+enableValidation(formConfig);
